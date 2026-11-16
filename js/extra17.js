@@ -106,7 +106,7 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
   b.innerHTML=`<span class="ocirc"><img src="${d.icon||'img/orbit-'+d.k+'.jpg'}" alt=""></span><span class="olbl">${d.n}</span>`;b.onclick=()=>sel(i,true);(i<3?L:R).appendChild(b);return b});
  let cur=-1,front=0,tt=0;
  function fillText(d){tx.querySelector('h3').textContent=d.n;tx.querySelector('.otl').textContent=d.tl;tx.querySelector('ul').innerHTML=d.li.map(x=>`<li>${x}</li>`).join('');cr.textContent=d.cr?'Photo: '+d.cr:'';cr.hidden=!d.cr}
- const hint=document.createElement('p');hint.className='ohint';hint.textContent='Tap a circle to see each K-Experience';st.appendChild(hint);
+ const hint=document.createElement('p');hint.className='ohint';hint.innerHTML='<span>Tap a circle to explore</span>';st.appendChild(hint);
  const xb=document.createElement('button');xb.type='button';xb.className='ostclose';xb.setAttribute('aria-label','Close');xb.innerHTML='&times;';xb.onclick=()=>close(true);st.appendChild(xb);
  function pop(){st.classList.remove('pop');void st.offsetWidth;st.classList.add('pop')}
  function close(focusBtn){if(cur<0)return;const was=cur;cur=-1;btns.forEach(b=>b.setAttribute('aria-pressed','false'));st.classList.remove('pop');st.classList.add('is-empty');if(focusBtn)btns[was].focus()}

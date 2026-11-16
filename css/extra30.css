@@ -378,9 +378,10 @@
 
 /* Orbit: card pops only when a circle is tapped */
 .ostage{position:relative}
-.ostage.is-empty{background:transparent;border:2px dashed rgba(80,0,0,.18);box-shadow:none}
+.ostage.is-empty{background:transparent;border-color:transparent;box-shadow:none}
 .ostage.is-empty .oimg,.ostage.is-empty .otx,.ostage.is-empty .ostclose{visibility:hidden}
-.ohint{display:none;position:absolute;inset:0;margin:0;place-items:center;text-align:center;padding:24px;font-weight:700;font-size:clamp(1rem,1.4vw,1.2rem);color:#6b5a55}
+.ohint{display:none;position:absolute;inset:0;margin:0;place-items:center;text-align:center;padding:24px;font-weight:700;font-size:clamp(1rem,1.4vw,1.2rem);color:#500000}
+.ohint span{display:inline-block;padding:12px 22px;border-radius:999px;background:rgba(255,255,255,.7);box-shadow:0 10px 30px -18px rgba(60,0,0,.45)}
 .ostage.is-empty .ohint{display:grid}
 .ostage.pop{animation:opop .45s cubic-bezier(.2,.8,.25,1.15)}
 @keyframes opop{from{opacity:0;transform:scale(.86) translateY(10px)}to{opacity:1;transform:none}}
