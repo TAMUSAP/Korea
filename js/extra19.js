@@ -108,6 +108,15 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
  function fillText(d){tx.querySelector('h3').textContent=d.n;tx.querySelector('.otl').textContent=d.tl;tx.querySelector('ul').innerHTML=d.li.map(x=>`<li>${x}</li>`).join('');cr.textContent=d.cr?'Photo: '+d.cr:'';cr.hidden=!d.cr}
  const hint=document.createElement('p');hint.className='ohint';hint.innerHTML='<span>Tap a circle to explore</span>';st.appendChild(hint);
  const xb=document.createElement('button');xb.type='button';xb.className='ostclose';xb.setAttribute('aria-label','Close');xb.innerHTML='&times;';xb.onclick=()=>close(true);st.appendChild(xb);
+ const NS='http://www.w3.org/2000/svg',lk=document.createElementNS(NS,'svg');lk.setAttribute('class','olinks');lk.setAttribute('aria-hidden','true');st.appendChild(lk);
+ const hub=document.createElement('div');hub.className='ohub';hub.setAttribute('aria-hidden','true');hub.innerHTML='<span class="ohk" lang="ko">한국 문화</span><b>K-Culture</b><small>Tap a circle to explore</small>';st.appendChild(hub);
+ function links(){const sr=st.getBoundingClientRect();if(!sr.width||getComputedStyle(lk).display==='none')return;const hr=hub.getBoundingClientRect(),hx=hr.left-sr.left+hr.width/2,hy=hr.top-sr.top+hr.height/2,R=hr.width/2+6;
+  lk.setAttribute('viewBox',`0 0 ${sr.width} ${sr.height}`);
+  lk.innerHTML=btns.map((b,i)=>{const c=b.querySelector('.ocirc').getBoundingClientRect(),r=c.width/2,cx=c.left-sr.left+r,cy=c.top-sr.top+r,sx=i<3?cx+r+4:cx-r-4,sy=cy;
+   const dx=sx-hx,dy=sy-hy,d=Math.hypot(dx,dy)||1,ex=hx+dx/d*R,ey=hy+dy/d*R,m=(ex-sx)*.55;
+   return `<path d="M${sx.toFixed(1)} ${sy.toFixed(1)} C${(sx+m).toFixed(1)} ${sy.toFixed(1)} ${(ex-m*.35).toFixed(1)} ${ey.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}"/><circle cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="4"/>`}).join('')}
+ if(window.ResizeObserver)new ResizeObserver(links).observe(o);window.addEventListener('resize',links);window.addEventListener('load',links);requestAnimationFrame(links);
+ btns.forEach(b=>{b.addEventListener('mouseenter',()=>st.classList.add('hl'));b.addEventListener('mouseleave',()=>st.classList.remove('hl'))});
  function pop(){st.classList.remove('pop');void st.offsetWidth;st.classList.add('pop')}
  function close(focusBtn){if(cur<0)return;const was=cur;cur=-1;btns.forEach(b=>b.setAttribute('aria-pressed','false'));st.classList.remove('pop');st.classList.add('is-empty');if(focusBtn)btns[was].focus()}
  function sel(i,anim){if(i===cur){close(false);return}const wasEmpty=cur<0;cur=i;const d=D[i];btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));
@@ -120,7 +129,7 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
  o.addEventListener('keydown',e=>{if(e.key==='Escape'&&cur>=0){e.preventDefault();close(true);return}const i=btns.indexOf(document.activeElement);if(i<0)return;let n=null;
   if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%6;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=(i+5)%6;else if(e.key==='Home')n=0;else if(e.key==='End')n=5;else if(/^[1-6]$/.test(e.key))n=+e.key-1;
   if(n!==null){e.preventDefault();btns[n].focus();sel(n,true)}});
- st.classList.add('is-empty')})();
+ st.classList.add('is-empty');links()})();
 
 (function(){const f=document.getElementById('food'),s=document.getElementById('squad');if(f&&s)s.after(f)})();
 

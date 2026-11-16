@@ -378,7 +378,7 @@
 
 /* Orbit: card pops only when a circle is tapped */
 .ostage{position:relative}
-.ostage.is-empty{background:transparent;border-color:transparent;box-shadow:none}
+.ostage.is-empty{background:transparent;border-color:transparent;box-shadow:none;overflow:visible}
 .ostage.is-empty .oimg,.ostage.is-empty .otx,.ostage.is-empty .ostclose{visibility:hidden}
 .ohint{display:none;position:absolute;inset:0;margin:0;place-items:center;text-align:center;padding:24px;font-weight:700;font-size:clamp(1rem,1.4vw,1.2rem);color:#500000}
 .ohint span{display:inline-block;padding:12px 22px;border-radius:999px;background:rgba(255,255,255,.7);box-shadow:0 10px 30px -18px rgba(60,0,0,.45)}
@@ -389,3 +389,17 @@
 .ostclose:hover{background:#fff}
 @media (max-width:820px){.ostage.is-empty .oimg,.ostage.is-empty .otx{display:none}.ostage.is-empty .ohint{position:static}}
 @media (prefers-reduced-motion:reduce){.ostage.pop{animation:none}}
+
+/* Orbit empty state: K-Culture hub linked to the six circles */
+.olinks{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;display:none}
+.olinks path{fill:none;stroke:#500000;stroke-opacity:.28;stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round;animation:oflow 1.6s linear infinite}
+.olinks circle{fill:#500000;fill-opacity:.35}
+.ostage.hl .olinks path{stroke-opacity:.5}
+@keyframes oflow{to{stroke-dashoffset:-24}}
+.ohub{display:none;position:absolute;left:50%;top:50%;width:clamp(170px,16vw,220px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 0 0 10px rgba(255,255,255,.45),0 0 0 22px rgba(255,255,255,.2),0 24px 50px -28px rgba(60,0,0,.55);flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;color:#500000;animation:obreath 3.2s ease-in-out infinite}
+.ohub b{font:800 clamp(1.4rem,2vw,1.8rem)/1 var(--display);letter-spacing:-.01em}
+.ohub .ohk{font-weight:700;font-size:.85rem;letter-spacing:.08em;color:#9a6b2f}
+.ohub small{font-weight:600;font-size:.82rem;color:#6b5a55;margin-top:4px}
+@keyframes obreath{50%{transform:translate(-50%,-50%) scale(1.035)}}
+@media (min-width:821px){.ostage.is-empty .olinks{display:block}.ostage.is-empty .ohub{display:flex}.ostage.is-empty .ohint{display:none}}
+@media (prefers-reduced-motion:reduce){.olinks path,.ohub{animation:none}}
