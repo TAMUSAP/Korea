@@ -469,7 +469,7 @@ footer{padding-block:28px;font-size:.8rem;color:var(--muted)}
   <div class="in">
     <div class="tag">Texas A&amp;M · Study Abroad in South Korea</div>
     <h1><span class="ln kq"><span>K-Curious?</span></span><span class="ln"><span>Make Korea<br><em>Your Summer</em></span></span></h1>
-    <p class="sub"><span>Taste the food. Meet the people. Go inside the companies.</span><span>13 days of culture, career, and connection in South Korea.</span></p>
+    <p class="sub"><span>Taste the food. Meet the people. Go inside the companies.</span><span>14 days of culture, career, and connection in South Korea.</span></p>
     <div class="when"><span>May 11–24, 2027</span><span>South Korea</span><span>3 credits · EHRD 489/689</span></div>
     <div class="ctaRow">
       <a class="btn primary" href="https://tamuabroad.via-trm.com/program_brochure/24567" target="_blank" rel="noopener">Apply now →</a>
@@ -572,7 +572,7 @@ footer{padding-block:28px;font-size:.8rem;color:var(--muted)}
 <section id="history"><div class="in">
   <div class="phead">
     <span class="eyebrow" style="color:var(--jade)">Part 3 · History</span>
-    <h2 class="sec">1,000 years in 13 days.</h2>
+    <h2 class="sec">1,000 years in 14 days.</h2>
     <p class="lead">Wear hanbok in a royal palace, walk through ancient kingdoms, and stand at the border between two Koreas.</p>
   </div>
   <div class="eras">
@@ -914,7 +914,7 @@ function renderQ(){if(step>=Q.length)return result();const[q,opts]=Q[step];
  qc.innerHTML=`<span class="qstep">Question ${step+1} of ${Q.length}</span><p class="qq">${q}</p><div class="opts">${opts.map((o,j)=>`<button data-j="${j}">${o[0]}</button>`).join('')}</div>`;
  qc.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{const c=opts[+b.dataset.j][1];score[c]=(score[c]||0)+1;step++;renderQ()})}
 function result(){const best=Object.entries(score).sort((a,b)=>b[1]-a[1])[0][0];const r=R[best];
- qc.innerHTML=`<div class="res"><span class="qstep">Your Korea type</span><span class="big">${r.hg}</span><h3>${r.t}</h3><p>${r.p} Good news: all 13 days include a bit of everything.</p><div class="row"><button class="btn maroon" id="seeDay" style="border:0;cursor:pointer">See my day →</button><button class="ghost" id="again">Retake quiz</button></div></div>`;
+ qc.innerHTML=`<div class="res"><span class="qstep">Your Korea type</span><span class="big">${r.hg}</span><h3>${r.t}</h3><p>${r.p} Good news: all 14 days include a bit of everything.</p><div class="row"><button class="btn maroon" id="seeDay" style="border:0;cursor:pointer">See my day →</button><button class="ghost" id="again">Retake quiz</button></div></div>`;
  qc.querySelector('#again').onclick=()=>{step=0;score={};renderQ()};
  qc.querySelector('#seeDay').onclick=()=>{document.getElementById('itinerary').scrollIntoView();show(r.day,true)}}
 renderQ();
