@@ -106,16 +106,21 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
   b.innerHTML=`<span class="ocirc"><img src="${d.icon||'img/orbit-'+d.k+'.jpg'}" alt=""></span><span class="olbl">${d.n}</span>`;b.onclick=()=>sel(i,true);(i<3?L:R).appendChild(b);return b});
  let cur=-1,front=0,tt=0;
  function fillText(d){tx.querySelector('h3').textContent=d.n;tx.querySelector('.otl').textContent=d.tl;tx.querySelector('ul').innerHTML=d.li.map(x=>`<li>${x}</li>`).join('');cr.textContent=d.cr?'Photo: '+d.cr:'';cr.hidden=!d.cr}
- function sel(i,anim){if(i===cur)return;cur=i;const d=D[i];btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));
+ const hint=document.createElement('p');hint.className='ohint';hint.textContent='Tap a circle to see each K-Experience';st.appendChild(hint);
+ const xb=document.createElement('button');xb.type='button';xb.className='ostclose';xb.setAttribute('aria-label','Close');xb.innerHTML='&times;';xb.onclick=()=>close(true);st.appendChild(xb);
+ function pop(){st.classList.remove('pop');void st.offsetWidth;st.classList.add('pop')}
+ function close(focusBtn){if(cur<0)return;const was=cur;cur=-1;btns.forEach(b=>b.setAttribute('aria-pressed','false'));st.classList.remove('pop');st.classList.add('is-empty');if(focusBtn)btns[was].focus()}
+ function sel(i,anim){if(i===cur){close(false);return}const wasEmpty=cur<0;cur=i;const d=D[i];btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));
+  if(wasEmpty){anim=false;st.classList.remove('is-empty')}pop();
   const back=imgs[1-front],fr=imgs[front];back.style.objectPosition=d.pos;back.alt=d.alt;
   const swap=()=>{back.classList.remove('off');fr.classList.add('off');front=1-front};
   if(!anim){back.src=d.src;swap();fillText(d);return}
   back.src=d.src;(back.decode?back.decode():Promise.resolve()).catch(()=>{}).then(()=>{if(cur===i)swap()});
   tx.classList.add('off');clearTimeout(tt);tt=setTimeout(()=>{fillText(D[cur]);tx.classList.remove('off')},220)}
- o.addEventListener('keydown',e=>{const i=btns.indexOf(document.activeElement);if(i<0)return;let n=null;
+ o.addEventListener('keydown',e=>{if(e.key==='Escape'&&cur>=0){e.preventDefault();close(true);return}const i=btns.indexOf(document.activeElement);if(i<0)return;let n=null;
   if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%6;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=(i+5)%6;else if(e.key==='Home')n=0;else if(e.key==='End')n=5;else if(/^[1-6]$/.test(e.key))n=+e.key-1;
   if(n!==null){e.preventDefault();btns[n].focus();sel(n,true)}});
- sel(1,false)})();
+ st.classList.add('is-empty')})();
 
 (function(){const f=document.getElementById('food'),s=document.getElementById('squad');if(f&&s)s.after(f)})();
 
