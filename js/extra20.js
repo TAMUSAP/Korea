@@ -103,13 +103,13 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
  D.forEach(d=>{d.src=d.src||P(d.ph).src||'';d.cr=d.ph?P(d.ph).credit:'';if(d.src){const i=new Image();i.src=d.src}});
  const L=o.querySelector('.ocol.l'),R=o.querySelector('.ocol.r'),st=o.querySelector('.ostage'),imgs=[...st.querySelectorAll('.oimg img')],cr=st.querySelector('.ocr'),tx=st.querySelector('.otx');
  const btns=D.map((d,i)=>{const b=document.createElement('button');b.type='button';b.className='obtn';b.setAttribute('aria-pressed','false');b.setAttribute('aria-controls','ostage');b.setAttribute('aria-label',d.n);
-  b.innerHTML=`<span class="ocirc"><img src="${d.icon||'img/orbit-'+d.k+'.jpg'}" alt=""></span><span class="olbl">${d.n}</span>`;b.onclick=()=>sel(i,true);(i<3?L:R).appendChild(b);return b});
+  b.style.setProperty('--i',i);b.innerHTML=`<span class="owrap"><span class="ocirc"><img src="${d.icon||'img/orbit-'+d.k+'.jpg'}" alt=""></span><span class="oplus" aria-hidden="true">+</span></span><span class="olbl">${d.n}</span>`;b.onclick=()=>sel(i,true);(i<3?L:R).appendChild(b);return b});
  let cur=-1,front=0,tt=0;
  function fillText(d){tx.querySelector('h3').textContent=d.n;tx.querySelector('.otl').textContent=d.tl;tx.querySelector('ul').innerHTML=d.li.map(x=>`<li>${x}</li>`).join('');cr.textContent=d.cr?'Photo: '+d.cr:'';cr.hidden=!d.cr}
- const hint=document.createElement('p');hint.className='ohint';hint.innerHTML='<span>Tap a circle to explore</span>';st.appendChild(hint);
+ const hint=document.createElement('p');hint.className='ohint';hint.innerHTML='<span>Tap any circle for the details</span>';st.appendChild(hint);
  const xb=document.createElement('button');xb.type='button';xb.className='ostclose';xb.setAttribute('aria-label','Close');xb.innerHTML='&times;';xb.onclick=()=>close(true);st.appendChild(xb);
  const NS='http://www.w3.org/2000/svg',lk=document.createElementNS(NS,'svg');lk.setAttribute('class','olinks');lk.setAttribute('aria-hidden','true');st.appendChild(lk);
- const hub=document.createElement('div');hub.className='ohub';hub.setAttribute('aria-hidden','true');hub.innerHTML='<span class="ohk" lang="ko">한국 문화</span><b>K-Culture</b><small>Tap a circle to explore</small>';st.appendChild(hub);
+ const hub=document.createElement('div');hub.className='ohub';hub.setAttribute('aria-hidden','true');hub.innerHTML='<span class="ohk" lang="ko">한국 문화</span><b>K-Culture</b><small>Tap any circle<br>for the details</small>';st.appendChild(hub);
  function links(){const sr=st.getBoundingClientRect();if(!sr.width||getComputedStyle(lk).display==='none')return;const hr=hub.getBoundingClientRect(),hx=hr.left-sr.left+hr.width/2,hy=hr.top-sr.top+hr.height/2,R=hr.width/2+6;
   lk.setAttribute('viewBox',`0 0 ${sr.width} ${sr.height}`);
   lk.innerHTML=btns.map((b,i)=>{const c=b.querySelector('.ocirc').getBoundingClientRect(),r=c.width/2,cx=c.left-sr.left+r,cy=c.top-sr.top+r,sx=i<3?cx+r+4:cx-r-4,sy=cy;
@@ -118,9 +118,9 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
  if(window.ResizeObserver)new ResizeObserver(links).observe(o);window.addEventListener('resize',links);window.addEventListener('load',links);requestAnimationFrame(links);
  btns.forEach(b=>{b.addEventListener('mouseenter',()=>st.classList.add('hl'));b.addEventListener('mouseleave',()=>st.classList.remove('hl'))});
  function pop(){st.classList.remove('pop');void st.offsetWidth;st.classList.add('pop')}
- function close(focusBtn){if(cur<0)return;const was=cur;cur=-1;btns.forEach(b=>b.setAttribute('aria-pressed','false'));st.classList.remove('pop');st.classList.add('is-empty');if(focusBtn)btns[was].focus()}
+ function close(focusBtn){if(cur<0)return;const was=cur;cur=-1;btns.forEach(b=>b.setAttribute('aria-pressed','false'));st.classList.remove('pop');st.classList.add('is-empty');o.classList.add('is-empty');if(focusBtn)btns[was].focus()}
  function sel(i,anim){if(i===cur){close(false);return}const wasEmpty=cur<0;cur=i;const d=D[i];btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));
-  if(wasEmpty){anim=false;st.classList.remove('is-empty')}pop();
+  if(wasEmpty){anim=false;st.classList.remove('is-empty');o.classList.remove('is-empty')}pop();
   const back=imgs[1-front],fr=imgs[front];back.style.objectPosition=d.pos;back.alt=d.alt;
   const swap=()=>{back.classList.remove('off');fr.classList.add('off');front=1-front};
   if(!anim){back.src=d.src;swap();fillText(d);return}
@@ -129,7 +129,7 @@ document.querySelectorAll('img[data-ph="smhq"]').forEach(i=>{i.src='img/smstore.
  o.addEventListener('keydown',e=>{if(e.key==='Escape'&&cur>=0){e.preventDefault();close(true);return}const i=btns.indexOf(document.activeElement);if(i<0)return;let n=null;
   if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%6;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=(i+5)%6;else if(e.key==='Home')n=0;else if(e.key==='End')n=5;else if(/^[1-6]$/.test(e.key))n=+e.key-1;
   if(n!==null){e.preventDefault();btns[n].focus();sel(n,true)}});
- st.classList.add('is-empty');links()})();
+ st.classList.add('is-empty');o.classList.add('is-empty');links()})();
 
 (function(){const f=document.getElementById('food'),s=document.getElementById('squad');if(f&&s)s.after(f)})();
 
